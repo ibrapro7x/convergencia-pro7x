@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Era da Convergência — Pro7x Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:     #080C18;
+    --deep:    #0D1225;
+    --mid:     #151C35;
+    --cyan:    #00D4FF;
+    --violet:  #7C3AED;
+    --amber:   #F59E0B;
+    --paper:   #F5F3EE;
+    --cream:   #EDE9E0;
+    --gray:    #8892A4;
+    --lgray:   #CBD5E1;
+    --white:   #FFFFFF;
+    --serif:   'DM Serif Display', Georgia, serif;
+    --body:    'Literata', Georgia, serif;
+    --mono:    'IBM Plex Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: .4;
+  }
+
+  /* ── MASTHEAD ──────────────────────────────────────────── */
+  .masthead {
+    background: var(--ink);
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    display: flex; align-items: stretch; justify-content: space-between;
+    position: relative; overflow: hidden; z-index: 10;
+  }
+  .masthead::after {
+    content: '';
+    position: absolute; left: 0; bottom: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--violet));
+  }
+  .brand {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 0;
+  }
+  .brand-logo {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--violet), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 18px; color: white; letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  .brand-name {
+    font-family: var(--mono); font-size: .7rem; font-weight: 600;
+    color: var(--white); letter-spacing: .12em; line-height: 1.4;
+    text-transform: uppercase;
+  }
+  .brand-name span { color: var(--cyan); }
+  .masthead-meta {
+    display: flex; align-items: center; gap: 1.5rem;
+    font-family: var(--mono); font-size: .62rem; color: var(--gray);
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .masthead-meta .tag {
+    background: var(--mid); color: var(--cyan); padding: .25rem .7rem;
+    border: 1px solid rgba(0,212,255,.2); border-radius: 3px;
+  }
+
+  /* ── HERO ──────────────────────────────────────────────── */
+  .hero {
+    background: var(--ink);
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem) 0;
+    position: relative; overflow: hidden; z-index: 1;
+  }
+
+  /* Grid lines bg */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 20%, black 40%, transparent 100%);
+  }
+
+  /* Glow orbs */
+  .hero-orb {
+    position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
+  }
+  .hero-orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,.35) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+  .hero-orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,212,255,.2) 0%, transparent 70%);
+    bottom: 0; left: 10%;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start;
+  }
+
+  .hero-kicker {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-family: var(--mono); font-size: .65rem; font-weight: 600;
+    color: var(--cyan); letter-spacing: .18em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-kicker::before {
+    content: '';
+    width: 24px; height: 2px; background: var(--cyan);
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 8.5rem);
+    line-height: .92; letter-spacing: .02em;
+    color: var(--white); margin-bottom: .5rem;
+  }
+  .hero-title .accent { color: var(--cyan); }
+  .hero-title .accent-v { color: var(--violet); }
+
+  .hero-subtitle {
+    font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-style: italic; color: var(--lgray);
+    margin: 1.5rem 0 2rem; max-width: 540px; line-height: 1.5;
+  }
+
+  .hero-lead {
+    font-size: 1rem; color: rgba(203,213,225,.8); line-height: 1.8;
+    max-width: 520px; border-left: 2px solid var(--violet);
+    padding-left: 1.2rem; margin-bottom: 2.5rem;
+  }
+
+  /* Floating stat cards */
+  .hero-stats {
+    display: flex; flex-direction: column; gap: 1rem;
+    padding-top: .5rem;
+  }
+  .stat-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; padding: 1rem 1.4rem;
+    backdrop-filter: blur(8px);
+    min-width: 190px;
+    animation: float 6s ease-in-out infinite;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+  }
+  .stat-card:nth-child(2) { animation-delay: -2s; }
+  .stat-card:nth-child(3) { animation-delay: -4s; }
+  .stat-card:nth-child(4) { animation-delay: -1s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .stat-val {
+    font-family: var(--display); font-size: 1.9rem; letter-spacing: .04em;
+    color: var(--cyan); line-height: 1;
+  }
+  .stat-val.violet { color: var(--violet); }
+  .stat-val.amber  { color: var(--amber);  }
+  .stat-val.white  { color: var(--white);  }
+  .stat-label {
+    font-family: var(--mono); font-size: .6rem; color: var(--gray);
+    text-transform: uppercase; letter-spacing: .1em; margin-top: .4rem;
+    line-height: 1.4;
+  }
+
+  /* ── TICKER ────────────────────────────────────────────── */
+  .ticker-wrap {
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    overflow: hidden; height: 36px; display: flex; align-items: center;
+    position: relative; z-index: 10;
+  }
+  .ticker-track {
+    display: flex; gap: 3rem;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    font-family: var(--mono); font-size: .65rem; font-weight: 600;
+    color: var(--ink); letter-spacing: .1em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .ticker-item::before { content: '◆'; font-size: .4rem; }
+
+  /* ── ARTICLE LAYOUT ────────────────────────────────────── */
+  .article-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  /* ── MAIN CONTENT ──────────────────────────────────────── */
+  .section-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--mono); font-size: .6rem; font-weight: 600;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--white); padding: .3rem .9rem;
+    border-radius: 3px; margin-bottom: 1.2rem;
+  }
+  .tag-cyan   { background: var(--cyan); color: var(--ink); }
+  .tag-violet { background: var(--violet); }
+  .tag-amber  { background: var(--amber); color: var(--ink); }
+
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.2; color: var(--ink);
+    margin-bottom: 1rem; position: relative;
+  }
+  .section-heading::after {
+    content: '';
+    display: block; width: 40px; height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    margin-top: .8rem;
+  }
+
+  .body-text {
+    font-size: 1rem; line-height: 1.85; color: #2d3748;
+    margin-bottom: 1.4rem; text-align: justify;
+    hyphens: auto;
+  }
+  .body-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ── PULL QUOTE ────────────────────────────────────────── */
+  .pull-quote {
+    background: var(--deep);
+    border-left: 4px solid var(--cyan);
+    padding: 1.8rem 2rem;
+    margin: 2.5rem 0; border-radius: 0 8px 8px 0;
+    position: relative; overflow: hidden;
+  }
+  .pull-quote::after {
+    content: '"';
+    font-family: var(--display); font-size: 9rem;
+    color: rgba(0,212,255,.06); line-height: 1;
+    position: absolute; top: -1rem; right: 1rem; pointer-events: none;
+  }
+  .pull-quote p {
+    font-family: var(--serif); font-size: 1.25rem; font-style: italic;
+    color: var(--cyan); line-height: 1.6; position: relative; z-index: 1;
+  }
+
+  /* ── SECTION DIVIDER ───────────────────────────────────── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2.5rem 0;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lgray), transparent);
+  }
+  .section-divider span {
+    font-family: var(--mono); font-size: .6rem; color: var(--gray);
+    letter-spacing: .15em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── SIDEBAR ───────────────────────────────────────────── */
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* Data boxes */
+  .data-box {
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 10px; padding: 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .data-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+  }
+  .data-box-title {
+    font-family: var(--mono); font-size: .6rem; font-weight: 600;
+    color: var(--violet); letter-spacing: .15em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .data-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: .55rem 0;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-row-val {
+    font-family: var(--display); font-size: 1.3rem; color: var(--ink);
+    letter-spacing: .03em; flex-shrink: 0;
+  }
+  .data-row-val.c { color: var(--cyan); }
+  .data-row-val.v { color: var(--violet); }
+  .data-row-val.a { color: var(--amber); }
+  .data-row-lbl {
+    font-family: var(--mono); font-size: .58rem; color: var(--gray);
+    text-transform: uppercase; letter-spacing: .08em; text-align: right;
+    max-width: 140px; line-height: 1.4;
+  }
+
+  /* Insight box */
+  .insight-box {
+    background: var(--deep);
+    border-radius: 10px; padding: 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .insight-box::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at top right, rgba(124,58,237,.3) 0%, transparent 60%);
+  }
+  .insight-box-title {
+    font-family: var(--mono); font-size: .6rem; font-weight: 600;
+    color: var(--violet); letter-spacing: .15em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .insight-item {
+    display: flex; gap: .8rem; align-items: flex-start;
+    margin-bottom: .9rem; padding-bottom: .9rem;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .insight-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .insight-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan); flex-shrink: 0; margin-top: .55rem;
+  }
+  .insight-dot.v { background: var(--violet); }
+  .insight-dot.a { background: var(--amber); }
+  .insight-text {
+    font-family: var(--body); font-size: .82rem; color: rgba(203,213,225,.85);
+    line-height: 1.6;
+  }
+  .insight-text strong { color: var(--cyan); }
+
+  /* Sources box */
+  .sources-box {
+    background: var(--cream); border-radius: 10px; padding: 1.2rem 1.4rem;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+  .sources-box-title {
+    font-family: var(--mono); font-size: .58rem; font-weight: 600;
+    color: var(--gray); letter-spacing: .15em; text-transform: uppercase;
+    margin-bottom: .8rem;
+  }
+  .sources-box p {
+    font-family: var(--mono); font-size: .58rem; color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* ── CONCLUSION BANNER ─────────────────────────────────── */
+  .conclusion {
+    background: var(--deep);
+    margin: 3rem 0 0;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 5vw, 4rem);
+    border-radius: 16px; position: relative; overflow: hidden;
+    grid-column: 1 / -1;
+  }
+  .conclusion::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 0% 50%, rgba(124,58,237,.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,212,255,.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .conclusion::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--violet));
+  }
+  .conclusion-inner { position: relative; z-index: 1; }
+  .conclusion-label {
+    font-family: var(--mono); font-size: .62rem; font-weight: 600;
+    color: var(--cyan); letter-spacing: .2em; text-transform: uppercase;
+    margin-bottom: 1rem; display: block;
+  }
+  .conclusion-text {
+    font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    line-height: 1.55; color: var(--white); max-width: 800px;
+  }
+  .conclusion-text em { color: var(--cyan); font-style: normal; }
+  .conclusion-cta {
+    margin-top: 1.5rem;
+    font-family: var(--mono); font-size: .8rem; font-weight: 600;
+    color: var(--amber); letter-spacing: .1em; text-transform: uppercase;
+  }
+
+  /* ── AUTHOR CARD ───────────────────────────────────────── */
+  .author-section {
+    padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .author-card {
+    display: flex; gap: 2rem; align-items: center;
+    background: var(--ink); border-radius: 16px; padding: 2rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .author-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+  }
+  .author-avatar {
+    width: 70px; height: 70px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--violet), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 1.6rem; color: white;
+    letter-spacing: .05em; position: relative;
+  }
+  .author-avatar::after {
+    content: '';
+    position: absolute; inset: -3px; border-radius: 50%;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, var(--violet), var(--cyan)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+  }
+  .author-info { flex: 1; }
+  .author-name {
+    font-family: var(--display); font-size: 1.6rem; letter-spacing: .05em;
+    color: var(--white); line-height: 1;
+  }
+  .author-company {
+    font-family: var(--mono); font-size: .68rem; font-weight: 600;
+    color: var(--cyan); letter-spacing: .15em; text-transform: uppercase;
+    margin-top: .4rem;
+  }
+  .author-bio {
+    font-family: var(--body); font-size: .85rem; color: var(--gray);
+    margin-top: .5rem; line-height: 1.6;
+  }
+  .author-linkedin {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: #0A66C2; color: white; text-decoration: none;
+    font-family: var(--mono); font-size: .65rem; font-weight: 600;
+    letter-spacing: .08em; padding: .6rem 1.2rem; border-radius: 6px;
+    flex-shrink: 0; transition: transform .2s, box-shadow .2s;
+  }
+  .author-linkedin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(10,102,194,.4);
+  }
+  .author-linkedin svg { width: 16px; height: 16px; fill: white; }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  footer {
+    background: var(--deep);
+    padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+    text-align: center; border-top: 1px solid rgba(255,255,255,.06);
+  }
+  footer p {
+    font-family: var(--mono); font-size: .58rem; color: var(--gray);
+    letter-spacing: .05em; line-height: 1.8;
+  }
+  footer span { color: var(--cyan); }
+
+  /* ── ANIMATIONS ────────────────────────────────────────── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp .7s ease forwards;
+  }
+  .fade-in:nth-child(1) { animation-delay: .1s; }
+  .fade-in:nth-child(2) { animation-delay: .2s; }
+  .fade-in:nth-child(3) { animation-delay: .3s; }
+  .fade-in:nth-child(4) { animation-delay: .4s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── RESPONSIVE ────────────────────────────────────────── */
+  @media (max-width: 820px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: row; flex-wrap: wrap; }
+    .stat-card { min-width: 140px; flex: 1; }
+    .article-grid { grid-template-columns: 1fr; }
+    .masthead-meta .tag { display: none; }
+    .author-card { flex-direction: column; text-align: center; }
+  }
+
+  @media print {
+    .ticker-wrap, .hero-stats, body::before { display: none; }
+    .article-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ──────────────────────────────────────────────────────── -->
+<header class="masthead">
+  <div class="brand">
+    <div class="brand-logo">P7</div>
+    <div class="brand-name">
+      Pro7x <span>Technology</span><br>
+      Innovation · Transformation
+    </div>
+  </div>
+  <div class="masthead-meta">
+    <span class="tag">Estratégia & Inovação</span>
+    <span>Edição Especial · Março 2026</span>
+  </div>
+</header>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-kicker fade-in">Análise Estratégica · Tecnologia Global</div>
+      <h1 class="hero-title fade-in">
+        A ERA<br>
+        DA <span class="accent">CON</span><span class="accent-v">VER</span><span class="accent">GÊN</span>CIA
+      </h1>
+      <p class="hero-subtitle fade-in">
+        Quando múltiplas forças se encontram e redefinem o mundo dos negócios
+      </p>
+      <p class="hero-lead fade-in">
+        Por muito tempo, líderes empresariais se perguntaram qual seria a próxima grande tendência.
+        A pergunta mudou — e entender por quê pode ser a vantagem competitiva mais importante da próxima década.
+      </p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-val">US$ 37Bi</div>
+        <div class="stat-label">Gastos globais em IA<br>generativa · 2025</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val violet">US$ 728Bi</div>
+        <div class="stat-label">Mercado global de<br>semicondutores · 2025</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val amber">920%</div>
+        <div class="stat-label">Crescimento na adoção<br>de agentes de IA · 2025</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val white">US$ 93Bi</div>
+        <div class="stat-label">Mercado de IA agêntica<br>projetado para 2032</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ─────────────────────────────────────────────────────────── -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Convergência Tecnológica</span>
+    <span class="ticker-item">IA Generativa · US$ 37Bi em 2025</span>
+    <span class="ticker-item">Semicondutores · US$ 728Bi</span>
+    <span class="ticker-item">Robótica Industrial · US$ 16,7Bi</span>
+    <span class="ticker-item">US CHIPS Act · US$ 52,7Bi</span>
+    <span class="ticker-item">IA Agêntica · CAGR 44,6%</span>
+    <span class="ticker-item">Pro7x Technology · Innovation · Transformation</span>
+    <span class="ticker-item">Convergência Tecnológica</span>
+    <span class="ticker-item">IA Generativa · US$ 37Bi em 2025</span>
+    <span class="ticker-item">Semicondutores · US$ 728Bi</span>
+    <span class="ticker-item">Robótica Industrial · US$ 16,7Bi</span>
+    <span class="ticker-item">US CHIPS Act · US$ 52,7Bi</span>
+    <span class="ticker-item">IA Agêntica · CAGR 44,6%</span>
+    <span class="ticker-item">Pro7x Technology · Innovation · Transformation</span>
+  </div>
+</div>
+
+<!-- ── ARTICLE ─────────────────────────────────────────────────────────── -->
+<main class="article-wrap">
+  <div class="article-grid">
+
+    <!-- ─ MAIN COLUMN ──────────────────────────────────────────────────── -->
+    <article>
+
+      <!-- Section 1 -->
+      <div class="section-tag tag-cyan">O Fenômeno da Convergência</div>
+      <h2 class="section-heading">Quando múltiplas forças param de evoluir separadas</h2>
+
+      <p class="body-text">
+        O que estamos vivendo não é apenas o surgimento de novas tecnologias ou novos mercados.
+        É algo mais profundo: uma <strong>era de convergência</strong> — um momento em que forças distintas como
+        inteligência artificial, geopolítica, biotecnologia e fragmentação econômica deixam de
+        evoluir em paralelo e passam a interagir entre si. Quando isso acontece, o impacto não é
+        linear. <strong>É exponencial.</strong>
+      </p>
+
+      <p class="body-text">
+        Os dados já confirmam essa inflexão. Os gastos corporativos com IA generativa chegaram a
+        <strong>US$ 37 bilhões em 2025</strong> — um salto vertiginoso ante apenas US$ 2,3 bilhões em 2023
+        (Menlo Ventures, 2025). Mais do que volume financeiro, o número revela uma mudança de
+        natureza: a IA deixou de ser experimento e passou a ser infraestrutura operacional.
+      </p>
+
+      <p class="body-text">
+        Mas a transformação vai além dos modelos de linguagem. O mercado global de robótica industrial
+        atingiu um recorde histórico de <strong>US$ 16,7 bilhões</strong> em instalações, impulsionado pela
+        convergência entre tecnologia da informação e tecnologia operacional — uma integração que
+        cria fluxos de dados contínuos entre o mundo digital e o mundo físico (IFR, 2026).
+        Na biotecnologia, a convergência com a IA já produz as chamadas <em>biofoundries</em>: instalações
+        automatizadas que integram robótica e modelos de linguagem para acelerar a produção
+        biológica e reduzir custos operacionais.
+      </p>
+
+      <p class="body-text">
+        Segundo a OCDE, em seu <em>Science, Technology and Innovation Outlook 2025</em>, as transformações
+        sociais exigirão o aproveitamento do dinamismo da convergência tecnológica — um fenômeno que
+        emerge com força particular nos contextos de IA, transformação digital, biotecnologias
+        avançadas e ciência de materiais.
+      </p>
+
+      <div class="pull-quote">
+        <p>"As maiores oportunidades estratégicas não surgem de tendências isoladas — elas emergem exatamente onde diferentes forças se cruzam, onde mercados são redefinidos e líderes emergem."</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="section-divider"><span>Geopolítica & Infraestrutura</span></div>
+
+      <!-- Section 2 -->
+      <div class="section-tag tag-violet">Infraestrutura como Poder</div>
+      <h2 class="section-heading">A nova geopolítica digital</h2>
+
+      <p class="body-text">
+        A geopolítica entrou definitivamente na equação tecnológica. Semicondutores, data centers,
+        energia e minerais críticos deixaram de ser insumos industriais para se tornarem
+        <strong>ativos estratégicos de Estado</strong>. A rivalidade entre EUA e China acentuou o caráter
+        estratégico dos semicondutores, colocando em xeque capacidades militares e a segurança
+        nacional de múltiplos países (WEF, 2025).
+      </p>
+
+      <p class="body-text">
+        A resposta das grandes potências é massiva. O <strong>US CHIPS Act</strong> destina US$ 52,7 bilhões para
+        a fabricação doméstica de semicondutores, como parte de um pacote de aproximadamente
+        US$ 280 bilhões. Empresas privadas já anunciaram mais de <strong>US$ 500 bilhões</strong> em investimentos
+        para construir e expandir fábricas em mais de 25 estados americanos.
+        Com base nesse momentum, o mercado global de semicondutores foi revisado para
+        <strong>US$ 728 bilhões em 2025</strong> — crescimento anual de 15% —, com projeção de <strong>US$ 800 bilhões em 2026</strong>
+        a caminho do marco de US$ 1 trilhão ainda nesta década (Omdia / SEMI, 2025).
+      </p>
+
+      <p class="body-text">
+        Para as empresas globais, esse ambiente significa algo inédito: a rivalidade tecnológica
+        deu origem ao que analistas chamam de uma nova <em>"Guerra Fria digital"</em>, com governos de todo
+        o mundo implementando legislações de soberania de dados e fragmentando a nuvem em silos
+        nacionais. Operar globalmente passou a significar operar em múltiplos mundos tecnológicos
+        ao mesmo tempo.
+      </p>
+
+      <!-- Divider -->
+      <div class="section-divider"><span>Trabalho & Automação</span></div>
+
+      <!-- Section 3 -->
+      <div class="section-tag tag-amber">O Paradoxo do Trabalho</div>
+      <h2 class="section-heading">Escassez de talentos e abundância de automação</h2>
+
+      <p class="body-text">
+        Há uma tensão fundamental no mercado de trabalho que nenhum gestor pode ignorar.
+        A adoção de frameworks de agentes de IA por desenvolvedores cresceu <strong>920% em 2025</strong>,
+        enquanto o mercado de IA agêntica — sistemas que operam de forma autônoma em fluxos
+        de trabalho complexos — deve expandir de US$ 7,06 bilhões em 2025 para
+        <strong>US$ 93,2 bilhões até 2032</strong>, com CAGR de 44,6% (StartUs Insights, 2026).
+      </p>
+
+      <p class="body-text">
+        A automação avança sobre tarefas repetitivas, mas cria uma escassez aguda de profissionais
+        capazes de construir e operar os próprios sistemas que automatizam. Segundo pesquisa do
+        IEEE com líderes tecnológicos de seis países, <strong>52% dos especialistas acreditam que a
+        robótica será o setor mais impactado pela IA no próximo ano</strong> — não por substituição,
+        mas por integração: máquinas e humanos operando em simbiose cada vez mais estreita.
+        O paradoxo cria um novo tipo de economia: escassez de talentos técnicos e abundância
+        de automação ao mesmo tempo.
+      </p>
+
+      <!-- Conclusion full-width -->
+      <div class="conclusion">
+        <div class="conclusion-inner">
+          <span class="conclusion-label">A Pergunta Estratégica que Importa</span>
+          <p class="conclusion-text">
+            O ano de 2026 é menos sobre avanços isolados e mais sobre ecossistemas — de dados,
+            financiamento, políticas e talentos que se entrelaçam para definir a arquitetura da
+            próxima geração de inovação. A pergunta estratégica para empresas hoje não é
+            <em>"qual tecnologia devemos adotar?"</em>
+            A pergunta real é: <em>quais convergências estão se formando agora — e como nos
+            posicionamos antes que elas se tornem óbvias para todos?</em>
+          </p>
+          <p class="conclusion-cta">Quem responder primeiro, vence. ◆</p>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ─ SIDEBAR ────────────────────────────────────────────────────── -->
+    <aside class="sidebar">
+
+      <div class="data-box">
+        <div class="data-box-title">Dados-Chave 2025–2026</div>
+        <div class="data-row">
+          <span class="data-row-val c">US$ 37Bi</span>
+          <span class="data-row-lbl">Gastos em IA generativa (2025)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val v">US$ 728Bi</span>
+          <span class="data-row-lbl">Mercado semicondutores (2025)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val a">US$ 800Bi</span>
+          <span class="data-row-lbl">Projeção semicondutores (2026)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val c">920%</span>
+          <span class="data-row-lbl">Crescimento de agentes de IA</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val v">44,6%</span>
+          <span class="data-row-lbl">CAGR de IA agêntica até 2032</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val a">52%</span>
+          <span class="data-row-lbl">Especialistas: robótica + IA (IEEE)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-row-val c">US$ 16,7Bi</span>
+          <span class="data-row-lbl">Robótica industrial global (2025)</span>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <div class="insight-box-title">Pontos de Convergência</div>
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <p class="insight-text"><strong>IA + Robótica</strong> — Sistemas integrados que percebem, decidem e agem no mundo físico com autonomia crescente.</p>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot v"></div>
+          <p class="insight-text"><strong>Geopolítica + Tech</strong> — Semicondutores e data centers como questões de segurança nacional e poder estratégico.</p>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot a"></div>
+          <p class="insight-text"><strong>IA + Biotecnologia</strong> — Biofoundries automatizadas que fundem robótica, LLMs e síntese biológica.</p>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <p class="insight-text"><strong>Automação + Escassez</strong> — Novo paradoxo econômico: abundância de máquinas, déficit agudo de talentos técnicos.</p>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <div class="sources-box-title">Fontes Científicas</div>
+        <p>
+          OCDE STI Outlook 2025 · Menlo Ventures GenAI Report 2025 · IFR Top 5 Trends 2026 ·
+          IEEE Global Study 2026 · SEMI Market Symposium 2025 · WEF AI Geopolitics 2025 ·
+          Omdia Semiconductor Forecast 2Q25 · StartUs Insights New Tech Trends 2026
+        </p>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<!-- ── AUTHOR CARD ─────────────────────────────────────────────────────── -->
+<section class="author-section">
+  <div class="author-card">
+    <div class="author-avatar">HI</div>
+    <div class="author-info">
+      <div class="author-name">Herivelto Ibrain</div>
+      <div class="author-company">Pro7x Technology · Innovation · Transformation</div>
+      <p class="author-bio">Estrategista em tecnologia, inovação e transformação digital. Especializado em identificar convergências tecnológicas e posicionar organizações à frente das mudanças estruturais do mercado global.</p>
+    </div>
+    <a class="author-linkedin" href="https://www.linkedin.com/in/herivelto-ibrain" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      linkedin.com/in/herivelto-ibrain
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    <span>© 2026 Pro7x Technology. Innovation. Transformation.</span> · Todos os direitos reservados.<br>
+    Artigo de autoria de Herivelto Ibrain · Dados baseados em pesquisas publicadas em 2025–2026.<br>
+    OCDE · Menlo Ventures · IFR · IEEE · SEMI · WEF · Omdia · StartUs Insights
+  </p>
+</footer>
+
+</body>
+</html>
